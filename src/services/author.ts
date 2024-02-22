@@ -1,0 +1,104 @@
+import { Axios } from "../helpers/axiosHelper";
+import Cookies from "js-cookie";
+
+let status: number;
+let message: string;
+let data: any;
+
+export const getAuthorDetails = async (authorId: string) => {
+    try {
+        const response = await Axios({
+            url: `/blog/author-details/${authorId}`,
+            method: "get",
+        });
+        status = 200;
+        data = response.data;
+    } catch (err: any) {
+        status = err.response.status;
+        message = err.response.data.message;
+    }
+    return { status, data };
+};
+
+export const uploadBlog = async (formData: FormData) => {
+    const token = Cookies.get("token");
+    try {
+        const response = await Axios({
+            url: "/v1/blog/post",
+            method: "post",
+            body: formData,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        status = 200;
+        message = response.data.message;
+    } catch (err: any) {
+        status = err.response.status;
+        message = err.response.data.message;
+    }
+    return { status, message };
+};
+
+export const updateBlog = async (formData: FormData, blogId: string) => {
+    const token = Cookies.get("token");
+
+    try {
+        const response = await Axios({
+            url: `/blog/edit/${blogId}`,
+            method: "patch",
+            body: formData,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        status = 200;
+        message = response.data.message;
+    } catch (err: any) {
+        status = err.response.status;
+        message = err.response.data.message;
+    }
+    return { status, message };
+};
+
+export const getAllBlogsByUser = async (userId: string) => {
+    const token = Cookies.get("token");
+    try {
+        const response = await Axios({
+            url: `/blog/my-blogs/${userId}`,
+            method: "get",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        status = 200;
+        message = response.data.message;
+        data = response.data.blogs;
+    } catch (err: any) {
+        status = err.response.status;
+        message = err.response.data.message;
+    }
+    return { status, message, data };
+};
+
+export const updateUser = async (data: any) => {
+    const token = Cookies.get("token");
+    try {
+        const response = await Axios({
+            url: `/auth/update-me`,
+            method: "patch",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            body: data,
+        });
+        status = 200;
+        message = response.data.message;
+        data = response.data.user;
+    } catch (err: any) {
+        status = err.response.status;
+        message = err.response.data.message;
+    }
+    return { status, message, data };
+};
