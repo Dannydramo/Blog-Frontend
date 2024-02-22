@@ -51,7 +51,7 @@ const Author = () => {
                             }
                             crossOrigin="anonymous"
                             alt=""
-                            className="h-[100px] w-[100px] sm:h-[150px] sm:w-[150px]"
+                            className="h-[100px] w-[100px] sm:h-[150px] sm:w-[150px] rounded-full"
                         />
                         <p className="font-bold text-3xl sm:text-4xl mt-8">
                             {authorData.username}

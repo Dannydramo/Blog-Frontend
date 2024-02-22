@@ -1,3 +1,4 @@
+import { AuthorProps } from "@/interfaces/blog";
 import { create } from "zustand";
 
 interface UserStoreInterface {
