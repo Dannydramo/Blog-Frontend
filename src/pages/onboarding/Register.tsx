@@ -1,7 +1,5 @@
-import React, { ChangeEvent, ChangeEventHandler, useState } from "react";
-import { Input } from "@/components/ui/input";
+import { ChangeEvent, ChangeEventHandler, useState } from "react";
 import { Label } from "@/components/ui/label";
-
 import AuthImage from "../../assets/auth-image.jpg";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";

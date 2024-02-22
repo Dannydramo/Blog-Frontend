@@ -15,7 +15,7 @@ const BlogCard = ({ blogDetails }: { blogDetails: BlogProps }) => {
                     <img
                         alt=""
                         src={
-                            "https://blog-backend-x9ap.onrender.com/public/img/" +
+                            "https://scribbles-backend.onrender.com/public/img/" +
                             blogDetails.coverImage
                         }
                         crossOrigin="anonymous"

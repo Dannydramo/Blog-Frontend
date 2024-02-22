@@ -22,6 +22,7 @@ import {
 } from "@/services/review";
 import { useEffect } from "react";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
 
 const Comment = ({ blogId }: { blogId: string }) => {
     const [reviews, setReviews] = useState<any[]>([]);
@@ -37,11 +38,11 @@ const Comment = ({ blogId }: { blogId: string }) => {
     const fetchReviews = async () => {
         const { status, data } = await getBlogReviews(blogId);
 
-        if (status === 200) {
-            setReviews(data);
-        } else {
-            console.error("Failed to fetch reviews");
+        if (status !== 200) {
+            toast.error("Failed to fetch reviews");
+            return;
         }
+        setReviews(data);
     };
 
     useEffect(() => {
@@ -51,13 +52,13 @@ const Comment = ({ blogId }: { blogId: string }) => {
     const handleAddReview = async () => {
         setLoading({ ...loading, add: true });
         try {
-            const { status, data } = await addReview(blogId, comment);
-            if (status === 200) {
-                setComment("");
-                fetchReviews();
-            } else {
-                console.error("Failed to add review");
+            const { status } = await addReview(blogId, comment);
+            if (status !== 200) {
+                toast.error("Failed to add review");
+                return;
             }
+            setComment("");
+            fetchReviews();
         } catch (error) {
             console.error("Failed to add review", error);
         } finally {
@@ -71,19 +72,19 @@ const Comment = ({ blogId }: { blogId: string }) => {
     ) => {
         setLoading({ ...loading, edit: true });
         try {
-            const { status, data } = await editReview(reviewId, updatedComment);
-            if (status === 200) {
-                setReviews((prevReviews) =>
-                    prevReviews.map((review) =>
-                        review._id === reviewId
-                            ? { ...review, comment: updatedComment }
-                            : review
-                    )
-                );
-                setEditingReviewId(null);
-            } else {
-                console.error("Failed to edit review");
+            const { status } = await editReview(reviewId, updatedComment);
+            if (status !== 200) {
+                toast.error("Failed to edit review");
+                return;
             }
+            setReviews((prevReviews) =>
+                prevReviews.map((review) =>
+                    review._id === reviewId
+                        ? { ...review, comment: updatedComment }
+                        : review
+                )
+            );
+            setEditingReviewId(null);
         } catch (error) {
             console.error("Failed to edit review", error);
         } finally {
@@ -97,11 +98,9 @@ const Comment = ({ blogId }: { blogId: string }) => {
             const { status } = await deleteReview(reviewId);
 
             if (status === 200) {
-                console.log("dadfhsfvdh");
-                fetchReviews();
-            } else {
-                console.error("Failed to delete review");
+                toast.error("Failed to delete review");
             }
+            fetchReviews();
         } catch (error) {
             console.error("Failed to delete review", error);
         } finally {

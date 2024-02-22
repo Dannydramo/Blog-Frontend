@@ -17,13 +17,12 @@ const Archive = ({ blogId }: { blogId: string }) => {
     const [isArchived, setIsArchived] = useState(false);
     const fetchArchivedStatus = async () => {
         try {
-            const { status, message, data } = await fetchBlogArchiveStatus(
-                blogId
-            );
+            const { data } = await fetchBlogArchiveStatus(blogId);
 
             setIsArchived(data);
         } catch (error) {
             console.error("Error fetching archived status:", error);
+            return;
         }
     };
     useEffect(() => {

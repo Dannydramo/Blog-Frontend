@@ -5,6 +5,7 @@ import { getArchiveBlogs } from "@/services/archive";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
+import { toast } from "sonner";
 
 const Archived = () => {
     dayjs.extend(customParseFormat);
@@ -16,6 +17,7 @@ const Archived = () => {
             try {
                 const { status, message, data } = await getArchiveBlogs();
                 if (status !== 200) {
+                    toast.error(message);
                     return;
                 }
 

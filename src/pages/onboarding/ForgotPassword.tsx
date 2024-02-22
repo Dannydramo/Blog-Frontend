@@ -3,7 +3,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import AuthImage from "../../assets/auth-image.jpg";
 import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import TextInput from "@/components/TextInput";

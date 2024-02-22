@@ -41,7 +41,7 @@ const Login = () => {
         setIsLoading(true);
 
         try {
-            const { status, message, data } = await signInUser(formData);
+            const { status, message } = await signInUser(formData);
             if (status !== 200) {
                 toast.error(message);
                 setIsLoading(false);

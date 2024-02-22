@@ -114,7 +114,7 @@ const Navbar = ({ children }: { children: JSX.Element }) => {
                                                 <Avatar className="ml-[-2rem]">
                                                     <AvatarImage
                                                         src={
-                                                            "http://localhost:8000/public/img/" +
+                                                            "https://scribbles-backend.onrender.com/public/img/" +
                                                             user?.photo
                                                         }
                                                         crossOrigin="anonymous"

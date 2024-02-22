@@ -1,5 +1,4 @@
 import { Axios } from "../helpers/axiosHelper";
-import Cookies from "js-cookie";
 
 let status: number;
 let message: string;

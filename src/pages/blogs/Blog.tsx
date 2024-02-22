@@ -96,7 +96,7 @@ const Blog = () => {
                         <div className="w-full md:w-[50%]">
                             <img
                                 src={
-                                    "https://blog-backend-x9ap.onrender.com/public/img/" +
+                                    "https://scribbles-backend.onrender.com/public/img/" +
                                     blog.coverImage
                                 }
                                 crossOrigin="anonymous"
@@ -111,7 +111,7 @@ const Blog = () => {
                                 <div className="flex gap-3 items-center">
                                     <img
                                         src={
-                                            "https://blog-backend-x9ap.onrender.com/public/img/" +
+                                            "https://scribbles-backend.onrender.com/public/img/" +
                                             blog.author.photo
                                         }
                                         crossOrigin="anonymous"

@@ -1,3 +1,4 @@
+import { BlogProps } from "@/interfaces/blog";
 import BlogCard from "./BlogCard";
 
 const RelatedBlogs = ({ relatedBlogs }: { relatedBlogs: BlogProps[] }) => {

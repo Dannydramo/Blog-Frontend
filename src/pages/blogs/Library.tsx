@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import BlogCard from "@/components/dataDisplay/BlogCard";
 import { getAllBlogsByUser } from "@/services/author";
 import { UserStore } from "@/store/userStore";
@@ -6,6 +6,7 @@ import Navbar from "@/layout/Navbar";
 import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
 import { BlogProps } from "@/interfaces/blog";
+import { toast } from "sonner";
 
 const Library = () => {
     const { user } = UserStore();
@@ -20,11 +21,11 @@ const Library = () => {
                     user?._id!
                 );
 
-                if (status === 200) {
-                    setUserBlogs(data);
-                } else {
-                    setError("Failed to fetch user's blogs");
+                if (status !== 200) {
+                    toast.error(message);
+                    return;
                 }
+                setUserBlogs(data);
             } catch (error) {
                 console.error("Error fetching user's blogs:", error);
                 setError("Error fetching user's blogs");

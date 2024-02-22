@@ -46,7 +46,7 @@ const Author = () => {
                     <div className="flex flex-col items-center justify-center my-12">
                         <img
                             src={
-                                "http://localhost:8000/public/img/" +
+                                "https://scribbles-backend.onrender.com/public/img/" +
                                 authorData.photo
                             }
                             crossOrigin="anonymous"

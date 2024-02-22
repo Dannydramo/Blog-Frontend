@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BlogCard from "./BlogCard";
 import { BlogProps } from "@/interfaces/blog";
 

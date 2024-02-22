@@ -8,7 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { resetPasswordValidationSchema } from "../../validators/onboarding";
 import { useForm } from "react-hook-form";
-import { resetPassword, signInUser } from "@/services/onboarding";
+import { resetPassword } from "@/services/onboarding";
 import TextInput from "@/components/TextInput";
 import { ResetPasswordProps } from "@/interfaces/onboarding";
 const ResetPassword = () => {
@@ -43,10 +43,7 @@ const ResetPassword = () => {
         setIsLoading(true);
 
         try {
-            const { status, message, data } = await resetPassword(
-                formData,
-                token!
-            );
+            const { status, message } = await resetPassword(formData, token!);
             if (status !== 200) {
                 toast.error(message);
                 setIsLoading(false);
