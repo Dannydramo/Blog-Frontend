@@ -60,11 +60,13 @@ const Navbar = ({ children }: { children: JSX.Element }) => {
                                         fill="currentColor"
                                     />
                                 </svg>
-                                <span className="">Scribbles</span>
+                                <span className="hidden sm:flex">
+                                    Scribbles
+                                </span>
                             </Link>
                         </div>
 
-                        <div className="flex items-center gap-8 md:gap-12">
+                        <div className="flex items-center gap-6 sm:gap-10 md:gap-12">
                             <nav aria-label="Global" className="">
                                 <ul className="flex items-center gap-6 text-sm">
                                     <Link
