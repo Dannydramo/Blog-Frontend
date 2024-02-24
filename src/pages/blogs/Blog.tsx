@@ -82,7 +82,7 @@ const Blog = () => {
     return (
         <Navbar>
             <section className="mx-auto max-w-[1600px] w-[95%] md:w-[90%]">
-                <div className="w-1/2">
+                <div className="w-full md:w-1/2">
                     <hr />
                     <div className="my-2 flex justify-between">
                         <Comment blogId={id!} />

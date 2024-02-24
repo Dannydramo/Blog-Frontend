@@ -14,12 +14,13 @@ let data: any;
 export const registerUser = async (payload: RegisterProps) => {
     try {
         const response = await Axios({
-            url: "/auth/register",
+            url: "/auth/signup",
             method: "post",
             body: payload,
         });
         status = 200;
         message = response.message;
+        Cookies.set("token", response.token, { expires: 7 });
     } catch (err: any) {
         status = err.response.status;
         message = err.response.data.message;

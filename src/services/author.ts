@@ -24,7 +24,7 @@ export const uploadBlog = async (formData: FormData) => {
     const token = Cookies.get("token");
     try {
         const response = await Axios({
-            url: "/v1/blog/post",
+            url: "/blog/post",
             method: "post",
             body: formData,
             headers: {

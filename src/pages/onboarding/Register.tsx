@@ -51,9 +51,6 @@ const Register = () => {
         }
 
         try {
-            // Call API service for registration
-            console.log(formData);
-
             const { status, message } = await registerUser(formData);
             if (status !== 200) {
                 toast.error(message);

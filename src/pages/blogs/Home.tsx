@@ -89,7 +89,7 @@ const Home = () => {
                                     ))}
                                 </div>
                             )}
-                            {visibleBlogs.length > 0 && (
+                            {visibleBlogs.length > 15 && (
                                 <div className="flex justify-center mt-4">
                                     <button
                                         className="bg-teal-600 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded"
