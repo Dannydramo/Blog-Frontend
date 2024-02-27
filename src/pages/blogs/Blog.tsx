@@ -94,15 +94,17 @@ const Blog = () => {
                 {blog && (
                     <div className="flex flex-col md:flex-row gap-4 justify-between">
                         <div className="w-full md:w-[50%]">
-                            <img
-                                src={
-                                    "https://scribbles-backend.onrender.com/public/img/" +
-                                    blog.coverImage
-                                }
-                                crossOrigin="anonymous"
-                                alt=""
-                                className="h-[70vh] w-full rounded-3xl"
-                            />
+                            {blog && (
+                                <img
+                                    src={
+                                        "http://localhost:8000/public/img/" +
+                                        blog.coverImage
+                                    }
+                                    crossOrigin="anonymous"
+                                    alt=""
+                                    className="h-[70vh] w-full rounded-3xl"
+                                />
+                            )}
                         </div>
                         <div className="w-full md:w-[45%] mt-6">
                             <Link

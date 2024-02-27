@@ -13,11 +13,8 @@ const BlogCard = ({ blogDetails }: { blogDetails: BlogProps }) => {
             <Link to={`/${blogDetails.title}/${blogDetails._id}`}>
                 <article className="overflow-hidden rounded-lg shadow transition hover:shadow-lg">
                     <img
-                        alt={blogDetails.title + "Image"}
-                        src={
-                            "https://scribbles-backend.onrender.com/public/img/" +
-                            blogDetails.coverImage
-                        }
+                        alt={blogDetails.title + " Image"}
+                        src={`/public/img/${blogDetails.coverImage}`}
                         crossOrigin="anonymous"
                         className="h-56 w-full object-cover"
                     />
