@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -114,13 +114,6 @@ const Navbar = ({ children }: { children: JSX.Element }) => {
                                                 asChild
                                             >
                                                 <Avatar className="ml-[-2rem]">
-                                                    <AvatarImage
-                                                        src={
-                                                            "https://scribbles-backend.onrender.com/public/img/" +
-                                                            user?.photo
-                                                        }
-                                                        crossOrigin="anonymous"
-                                                    />
                                                     <AvatarFallback>
                                                         {user?.username
                                                             .split(" ")[0]

@@ -72,7 +72,7 @@ const Archived = () => {
                 </h1>
                 {archivedBlogs.map((archivedBlog: any) => (
                     <Link
-                        to={`/${archivedBlog.blog.title}/${archivedBlog.blog._id}`}
+                        to={`/${archivedBlog.blog.slug}/${archivedBlog.blog._id}`}
                         className="border my-2 flex space-x-4 md:space-x-8 p-4 items-center"
                         key={archivedBlog.blog._id}
                     >

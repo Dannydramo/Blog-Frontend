@@ -30,6 +30,9 @@ import { uploadBlog } from "@/services/author";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { BlogContent } from "@/interfaces/blog";
+import { cloudinaryConfig } from "@/utils/cloudinary";
+import axios from "axios";
+import Resizer from "react-image-file-resizer";
 
 const categories = [
     { value: "technology", label: "Technology" },
@@ -59,9 +62,10 @@ const Editor = () => {
         summary: "",
         title: "",
         content: "",
-        coverImage: undefined,
+        coverImage: "",
         category: "",
     });
+    const [coverImageFile, setCoverImageFile] = useState<any>();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const quill = useRef<QuillEditor | null>(null);
@@ -70,10 +74,24 @@ const Editor = () => {
 
     const handleCoverImage = async (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-        setBlogContent((prev) => ({
-            ...prev,
-            coverImage: file,
-        }));
+        if (file) {
+            try {
+                Resizer.imageFileResizer(
+                    file,
+                    2000,
+                    1333,
+                    "JPEG",
+                    100,
+                    0,
+                    (resizedImage) => {
+                        setCoverImageFile(resizedImage);
+                    },
+                    "base64"
+                );
+            } catch (error) {
+                console.log("Error resizing image");
+            }
+        }
     };
 
     const handleInputChange = (
@@ -87,21 +105,39 @@ const Editor = () => {
         }));
     };
 
+    const handleCoverImageUpload = async () => {
+        try {
+            const formData = new FormData();
+            formData.append("file", coverImageFile);
+            formData.append("upload_preset", cloudinaryConfig.uploadPreset);
+
+            const response = await axios.post(
+                `https://api.cloudinary.com/v1_1/${cloudinaryConfig.cloudName}/image/upload`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        "X-Requested-With": "XMLHttpRequest",
+                    },
+                }
+            );
+
+            const secureUrl = response.data.secure_url;
+            setBlogContent((prev) => ({
+                ...prev,
+                coverImage: secureUrl,
+            }));
+        } catch (error) {
+            console.error("Error uploading image:", error);
+        }
+    };
+
     const handler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append("title", blogContent.title);
-        formData.append("summary", blogContent.summary);
-        formData.append("category", blogContent.category);
-        formData.append("content", blogContent.content);
-        if (blogContent.coverImage) {
-            formData.append("coverImage", blogContent.coverImage);
-        }
 
         if (
             !blogContent.category ||
             !blogContent.content ||
-            !blogContent.coverImage ||
             !blogContent.summary ||
             !blogContent.title
         ) {
@@ -109,7 +145,8 @@ const Editor = () => {
         }
         try {
             setIsLoading(true);
-            const { status, message } = await uploadBlog(formData);
+            await handleCoverImageUpload();
+            const { status, message } = await uploadBlog(blogContent);
             if (status !== 200) {
                 toast.error(message);
                 setIsLoading(false);
@@ -121,7 +158,7 @@ const Editor = () => {
         } catch (err) {
             console.log(err);
             toast.error(
-                "Unable to process form submission. Kindly check all fields"
+                "Unable to process blog creation. Kindly check your intenet connection and try again!"
             );
             setIsLoading(false);
             return;

@@ -45,10 +45,7 @@ const Author = () => {
                 {authorData && (
                     <div className="flex flex-col items-center justify-center my-12">
                         <img
-                            src={
-                                "https://scribbles-backend.onrender.com/public/img/" +
-                                authorData.photo
-                            }
+                            src={authorData.photo}
                             crossOrigin="anonymous"
                             alt=""
                             className="h-[100px] w-[100px] sm:h-[150px] sm:w-[150px] rounded-full"

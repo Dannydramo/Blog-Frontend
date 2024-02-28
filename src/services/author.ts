@@ -1,3 +1,4 @@
+import { BlogContent } from "@/interfaces/blog";
 import { Axios } from "../helpers/axiosHelper";
 import Cookies from "js-cookie";
 
@@ -20,7 +21,7 @@ export const getAuthorDetails = async (authorId: string) => {
     return { status, data };
 };
 
-export const uploadBlog = async (formData: FormData) => {
+export const uploadBlog = async (formData: BlogContent) => {
     const token = Cookies.get("token");
     try {
         const response = await Axios({
@@ -40,7 +41,7 @@ export const uploadBlog = async (formData: FormData) => {
     return { status, message };
 };
 
-export const updateBlog = async (formData: FormData, blogId: string) => {
+export const updateBlog = async (formData: BlogContent, blogId: string) => {
     const token = Cookies.get("token");
 
     try {

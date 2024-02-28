@@ -3,8 +3,11 @@ import Navbar from "@/layout/Navbar";
 import { updateUser } from "@/services/author";
 import { getUserDetails } from "@/services/onboarding";
 import { UserStore } from "@/store/userStore";
+import { cloudinaryConfig } from "@/utils/cloudinary";
+import axios from "axios";
 import React, { useRef, useState } from "react";
 import { toast } from "sonner";
+import Resizer from "react-image-file-resizer";
 
 const Profile = () => {
     const { user, setUser } = UserStore();
@@ -14,7 +17,7 @@ const Profile = () => {
         user?.description || ""
     );
     const [loading, setLoading] = useState(false);
-
+    const [imageUplaod, setImageUpload] = useState<any>();
     const handleButtonClick = () => {
         inputFileRef.current?.click();
     };
@@ -23,19 +26,56 @@ const Profile = () => {
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
         const file = event.target.files?.[0];
-        const formData = new FormData();
-        formData.append("photo", file!);
 
-        try {
-            const { status, message, data } = await updateUser(formData);
-            if (status !== 200) {
-                toast.error(message);
-                return;
+        const formData = new FormData();
+        if (file) {
+            try {
+                Resizer.imageFileResizer(
+                    file,
+                    2000,
+                    1333,
+                    "JPEG",
+                    100,
+                    0,
+                    async (resizedImage) => {
+                        setImageUpload(resizedImage);
+                        formData.append("file", imageUplaod);
+                        formData.append(
+                            "upload_preset",
+                            cloudinaryConfig.uploadPreset
+                        );
+
+                        const response = await axios.post(
+                            `https://api.cloudinary.com/v1_1/${cloudinaryConfig.cloudName}/image/upload`,
+                            formData,
+                            {
+                                headers: {
+                                    "Content-Type": "multipart/form-data",
+                                    "X-Requested-With": "XMLHttpRequest",
+                                },
+                            }
+                        );
+
+                        const secureUrl = response.data.secure_url;
+                        try {
+                            const { status, message, data } = await updateUser({
+                                photo: secureUrl,
+                            });
+                            if (status !== 200) {
+                                toast.error(message);
+                                return;
+                            }
+                            setUser(data);
+                            getUserDetails();
+                        } catch (error) {
+                            console.log("Error updating user details", error);
+                        }
+                    },
+                    "base64"
+                );
+            } catch (error) {
+                console.log("Error resizing image");
             }
-            setUser(data);
-            getUserDetails();
-        } catch (error) {
-            console.log("Error updating user details", error);
         }
     };
 
@@ -81,10 +121,7 @@ const Profile = () => {
                 <div className="shadow p-4 rounded-3xl my-12">
                     <div className="w-full md:w-[80%] mx-auto">
                         <img
-                            src={
-                                "https://scribbles-backend.onrender.com/public/img/" +
-                                user?.photo
-                            }
+                            src={user?.photo}
                             alt=""
                             crossOrigin="anonymous"
                             className="h-[100px] w-[100px] md:w-[200px] md:h-[200px] block mx-auto rounded-full"

@@ -12,7 +12,7 @@ export interface BlogContent {
     summary: string;
     title: string;
     content: string;
-    coverImage: File | undefined;
+    coverImage: string;
     category: string;
 }
 export interface BlogProps {
@@ -21,6 +21,7 @@ export interface BlogProps {
     coverImage: string;
     content: string;
     summary: string;
+    slug: string;
     category: string;
     author: AuthorProps;
     reviews: string[];

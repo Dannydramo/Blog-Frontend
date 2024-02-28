@@ -10,11 +10,11 @@ const BlogCard = ({ blogDetails }: { blogDetails: BlogProps }) => {
 
     return (
         <>
-            <Link to={`/${blogDetails.title}/${blogDetails._id}`}>
+            <Link to={`/${blogDetails.slug}/${blogDetails._id}`}>
                 <article className="overflow-hidden rounded-lg shadow transition hover:shadow-lg">
                     <img
                         alt={blogDetails.title + " Image"}
-                        src={`/public/img/${blogDetails.coverImage}`}
+                        src={blogDetails.coverImage}
                         crossOrigin="anonymous"
                         className="h-56 w-full object-cover"
                     />

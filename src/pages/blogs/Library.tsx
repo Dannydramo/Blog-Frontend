@@ -80,7 +80,7 @@ const Library = () => {
                             <div key={blog._id} className="relative">
                                 <BlogCard blogDetails={blog} />
                                 <Link
-                                    to={`/edit/${blog.title}/${blog._id}`}
+                                    to={`/edit/${blog.slug}/${blog._id}`}
                                     className="absolute top-2 right-2 px-3 py-1 bg-teal-600 text-white rounded-md"
                                 >
                                     Edit
