@@ -185,13 +185,23 @@ const Comment = ({ blogId }: { blogId: string }) => {
                                 </>
                             ) : (
                                 <>
-                                    <p className="mb-2">{review.comment}</p>
-                                    <p className="mb-2">
-                                        Posted by:{" "}
-                                        <span className="ml-2">
-                                            {review.user.username}
-                                        </span>
-                                    </p>
+                                    <div className="flex gap-4">
+                                        <div className="">
+                                            <img
+                                                src={review.user.photo}
+                                                alt=""
+                                            />
+                                        </div>
+
+                                        <div className="">
+                                            <p className="mb-2">
+                                                {review.user.username}
+                                            </p>
+                                            <p className="mb-2">
+                                                {review.comment}
+                                            </p>
+                                        </div>
+                                    </div>
                                     <Button
                                         className="bg-teal-600 mr-2 hover:bg-teal-600"
                                         onClick={() =>
