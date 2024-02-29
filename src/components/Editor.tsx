@@ -68,30 +68,30 @@ const Editor = () => {
     const [coverImageFile, setCoverImageFile] = useState<any>();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
-    const quill = useRef<QuillEditor | null>(null);
+    const quill = useRef<any>();
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState("");
 
+    const resizeFile = (file: any) =>
+        new Promise((resolve) => {
+            Resizer.imageFileResizer(
+                file,
+                2000,
+                1333,
+                "JPEG",
+                100,
+                0,
+                (uri) => {
+                    resolve(uri);
+                },
+                "base64"
+            );
+        });
+
     const handleCoverImage = async (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-        if (file) {
-            try {
-                Resizer.imageFileResizer(
-                    file,
-                    2000,
-                    1333,
-                    "JPEG",
-                    100,
-                    0,
-                    (resizedImage) => {
-                        setCoverImageFile(resizedImage);
-                    },
-                    "base64"
-                );
-            } catch (error) {
-                console.log("Error resizing image");
-            }
-        }
+        const image = await resizeFile(file);
+        setCoverImageFile(image);
     };
 
     const handleInputChange = (

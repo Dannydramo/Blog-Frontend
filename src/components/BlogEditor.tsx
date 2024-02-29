@@ -70,26 +70,27 @@ const BlogEditor = ({ blog }: { blog: BlogProps }) => {
     const quill = useRef<QuillEditor | null>(null);
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(blogContent?.category);
+    const resizeFile = (file: any) =>
+        new Promise((resolve) => {
+            Resizer.imageFileResizer(
+                file,
+                2000,
+                1333,
+                "JPEG",
+                100,
+                0,
+                (uri) => {
+                    resolve(uri);
+                },
+                "base64"
+            );
+        });
+
     const handleCoverImage = async (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-        if (file) {
-            try {
-                Resizer.imageFileResizer(
-                    file,
-                    2000,
-                    1333,
-                    "JPEG",
-                    100,
-                    0,
-                    (resizedImage) => {
-                        setCoverImageFile(resizedImage);
-                    },
-                    "base64"
-                );
-            } catch (error) {}
-        }
+        const image = await resizeFile(file);
+        setCoverImageFile(image);
     };
-
     const handleInputChange = (
         e: ChangeEvent<HTMLInputElement>,
         inputField: string

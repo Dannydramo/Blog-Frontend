@@ -21,6 +21,21 @@ const Profile = () => {
     const handleButtonClick = () => {
         inputFileRef.current?.click();
     };
+    const resizeFile = (file: any) =>
+        new Promise((resolve) => {
+            Resizer.imageFileResizer(
+                file,
+                2000,
+                1333,
+                "JPEG",
+                100,
+                0,
+                (uri) => {
+                    resolve(uri);
+                },
+                "base64"
+            );
+        });
 
     const handleFileChange = async (
         event: React.ChangeEvent<HTMLInputElement>
@@ -28,54 +43,35 @@ const Profile = () => {
         const file = event.target.files?.[0];
 
         const formData = new FormData();
-        if (file) {
-            try {
-                Resizer.imageFileResizer(
-                    file,
-                    2000,
-                    1333,
-                    "JPEG",
-                    100,
-                    0,
-                    async (resizedImage) => {
-                        setImageUpload(resizedImage);
-                        formData.append("file", imageUplaod);
-                        formData.append(
-                            "upload_preset",
-                            cloudinaryConfig.uploadPreset
-                        );
+        const image = await resizeFile(file);
+        setImageUpload(image);
+        formData.append("file", imageUplaod);
+        formData.append("upload_preset", cloudinaryConfig.uploadPreset);
 
-                        const response = await axios.post(
-                            `https://api.cloudinary.com/v1_1/${cloudinaryConfig.cloudName}/image/upload`,
-                            formData,
-                            {
-                                headers: {
-                                    "Content-Type": "multipart/form-data",
-                                    "X-Requested-With": "XMLHttpRequest",
-                                },
-                            }
-                        );
-
-                        const secureUrl = response.data.secure_url;
-                        try {
-                            const { status, message, data } = await updateUser({
-                                photo: secureUrl,
-                            });
-                            if (status !== 200) {
-                                toast.error(message);
-                                return;
-                            }
-                            setUser(data);
-                            getUserDetails();
-                        } catch (error) {
-                            console.log("Error updating user details", error);
-                        }
-                    },
-                    "base64"
-                );
-            } catch (error) {
-                console.log("Error resizing image");
+        const response = await axios.post(
+            `https://api.cloudinary.com/v1_1/${cloudinaryConfig.cloudName}/image/upload`,
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "X-Requested-With": "XMLHttpRequest",
+                },
             }
+        );
+
+        const secureUrl = response.data.secure_url;
+        try {
+            const { status, message, data } = await updateUser({
+                photo: secureUrl,
+            });
+            if (status !== 200) {
+                toast.error(message);
+                return;
+            }
+            setUser(data);
+            getUserDetails();
+        } catch (error) {
+            console.log("Error updating user details", error);
         }
     };
 
