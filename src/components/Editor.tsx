@@ -33,29 +33,7 @@ import { BlogContent } from "@/interfaces/blog";
 import { cloudinaryConfig } from "@/utils/cloudinary";
 import axios from "axios";
 import Resizer from "react-image-file-resizer";
-
-const categories = [
-    { value: "technology", label: "Technology" },
-    { value: "travel", label: "Travel" },
-    { value: "food", label: "Food" },
-    { value: "health", label: "Health" },
-    { value: "fitness", label: "Fitness" },
-    { value: "fashion", label: "Fashion" },
-    { value: "education", label: "Education" },
-    { value: "business", label: "Business" },
-    { value: "finance", label: "Finance" },
-    { value: "lifestyle", label: "Lifestyle" },
-    { value: "sports", label: "Sports" },
-    { value: "entertainment", label: "Entertainment" },
-    { value: "science", label: "Science" },
-    { value: "art", label: "Art" },
-    { value: "music", label: "Music" },
-    { value: "books", label: "Books" },
-    { value: "movies", label: "Movies" },
-    { value: "gaming", label: "Gaming" },
-    { value: "dIY", label: "DIY" },
-    { value: "pets", label: "Pets" },
-];
+import { categories } from "@/utils/category";
 
 const Editor = () => {
     const [blogContent, setBlogContent] = useState<BlogContent>({

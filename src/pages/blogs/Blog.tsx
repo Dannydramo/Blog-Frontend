@@ -117,7 +117,7 @@ const Blog = () => {
                                     <p>{blog.author.username}</p>
                                 </div>
                             </Link>
-                            <h1 className="mt-8 mb-3 text-4xl sm:text-5xl font-bold">
+                            <h1 className="mt-8 mb-3 text-3xl sm:text-4xl font-bold">
                                 {blog.title}
                             </h1>
                             <p className="text-base md:text-xl my-6">

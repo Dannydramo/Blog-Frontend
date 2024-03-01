@@ -23,6 +23,7 @@ import {
 import { useEffect } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { UserStore } from "@/store/userStore";
 
 const Comment = ({ blogId }: { blogId: string }) => {
     const [reviews, setReviews] = useState<any[]>([]);
@@ -34,6 +35,7 @@ const Comment = ({ blogId }: { blogId: string }) => {
         edit: boolean;
         delete: boolean;
     }>({ add: false, edit: false, delete: false });
+    const { user } = UserStore();
 
     const fetchReviews = async () => {
         const { status, data } = await getBlogReviews(blogId);
@@ -113,7 +115,6 @@ const Comment = ({ blogId }: { blogId: string }) => {
             <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger>
-                        {" "}
                         <SheetTrigger asChild>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -164,24 +165,32 @@ const Comment = ({ blogId }: { blogId: string }) => {
                                             setEditedComment(e.target.value)
                                         }
                                     />
-                                    <Button
-                                        className="bg-teal-600 mr-2 hover:bg-teal-600"
-                                        onClick={() =>
-                                            handleEditReview(
-                                                review._id,
-                                                editedComment
-                                            )
-                                        }
-                                        disabled={loading.edit}
-                                    >
-                                        {loading.edit ? "Saving..." : "Save"}
-                                    </Button>
-                                    <Button
-                                        className="bg-teal-600 mr-2 hover:bg-teal-600"
-                                        onClick={() => setEditingReviewId(null)}
-                                    >
-                                        Cancel
-                                    </Button>
+                                    {user && user._id === review.user._id && (
+                                        <>
+                                            <Button
+                                                className="bg-teal-600 mr-2 hover:bg-teal-600"
+                                                onClick={() =>
+                                                    handleEditReview(
+                                                        review._id,
+                                                        editedComment
+                                                    )
+                                                }
+                                                disabled={loading.edit}
+                                            >
+                                                {loading.edit
+                                                    ? "Saving..."
+                                                    : "Save"}
+                                            </Button>
+                                            <Button
+                                                className="bg-teal-600 mr-2 hover:bg-teal-600"
+                                                onClick={() =>
+                                                    setEditingReviewId(null)
+                                                }
+                                            >
+                                                Cancel
+                                            </Button>
+                                        </>
+                                    )}
                                 </>
                             ) : (
                                 <>
@@ -202,25 +211,33 @@ const Comment = ({ blogId }: { blogId: string }) => {
                                             </p>
                                         </div>
                                     </div>
-                                    <Button
-                                        className="bg-teal-600 mr-2 hover:bg-teal-600"
-                                        onClick={() =>
-                                            setEditingReviewId(review._id)
-                                        }
-                                    >
-                                        Edit
-                                    </Button>
-                                    <Button
-                                        className="bg-red-600 mr-2 hover:bg-red-600"
-                                        onClick={() =>
-                                            handleDeleteReview(review._id)
-                                        }
-                                        disabled={loading.delete}
-                                    >
-                                        {loading.delete
-                                            ? "Deleting..."
-                                            : "Delete"}
-                                    </Button>
+                                    {user && user._id === review.user._id && (
+                                        <>
+                                            <Button
+                                                className="bg-teal-600 mr-2 hover:bg-teal-600"
+                                                onClick={() =>
+                                                    setEditingReviewId(
+                                                        review._id
+                                                    )
+                                                }
+                                            >
+                                                Edit
+                                            </Button>
+                                            <Button
+                                                className="bg-red-600 mr-2 hover:bg-red-600"
+                                                onClick={() =>
+                                                    handleDeleteReview(
+                                                        review._id
+                                                    )
+                                                }
+                                                disabled={loading.delete}
+                                            >
+                                                {loading.delete
+                                                    ? "Deleting..."
+                                                    : "Delete"}
+                                            </Button>
+                                        </>
+                                    )}
                                 </>
                             )}
                         </div>

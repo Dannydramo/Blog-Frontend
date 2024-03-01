@@ -1,6 +1,7 @@
 import { BlogContent } from "@/interfaces/blog";
 import { Axios } from "../helpers/axiosHelper";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 let status: number;
 let message: string;
@@ -24,14 +25,18 @@ export const getAuthorDetails = async (authorId: string) => {
 export const uploadBlog = async (formData: BlogContent) => {
     const token = Cookies.get("token");
     try {
-        const response = await Axios({
-            url: "/blog/post",
-            method: "post",
-            body: formData,
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const response = await axios.post(
+            "https://pink-stormy-binturong.cyclic.app/api/v1/blog/post",
+            formData,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+
+        console.log(response);
+
         status = 200;
         message = response.data.message;
     } catch (err: any) {
@@ -45,14 +50,15 @@ export const updateBlog = async (formData: BlogContent, blogId: string) => {
     const token = Cookies.get("token");
 
     try {
-        const response = await Axios({
-            url: `/blog/edit/${blogId}`,
-            method: "patch",
-            body: formData,
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const response = await axios.patch(
+            `https://pink-stormy-binturong.cyclic.app/api/v1/blog/edit/${blogId}`,
+            formData,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
 
         status = 200;
         message = response.data.message;
