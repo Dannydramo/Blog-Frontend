@@ -10,7 +10,6 @@ import { loginValidationSchema } from "../../validators/onboarding";
 import { useForm } from "react-hook-form";
 import { signInUser } from "@/services/onboarding";
 import TextInput from "@/components/TextInput";
-
 const Login = () => {
     const navigate = useNavigate();
     const [formData, setFormdata] = useState<LoginProps>({
@@ -58,6 +57,11 @@ const Login = () => {
             return;
         }
     };
+
+    const handleGoogleLogin = () => {
+        window.open(`${process.env.VITE_APP_API_URL}/oauth/google`, "_self");
+    };
+
     return (
         <div className="w-[90%] lg:w-[90%] max-w-[1600px] sm:w-[70%] md:w-[60%] mx-auto">
             <div className="py-4 lg:py-8 lg:space-x-6 lg:flex  lg:min-h-screen lg:justify-between">
@@ -83,7 +87,7 @@ const Login = () => {
                         onSubmit={handleSubmit(onSubmit)}
                         className="lg:w-[80%]"
                     >
-                        <div className="grid w-full my-6 max-w-sm items-center gap-1.5">
+                        <div className="grid w-full my-6 items-center gap-1.5">
                             <Label htmlFor="email" className="text-base">
                                 Email
                             </Label>
@@ -97,7 +101,7 @@ const Login = () => {
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="grid w-full max-w-sm items-center my-6 gap-1.5">
+                        <div className="grid w-full items-center my-6 gap-1.5">
                             <Label htmlFor="password" className="text-base">
                                 Password
                             </Label>
@@ -146,7 +150,7 @@ const Login = () => {
                         </Link>
                         <Button
                             type="submit"
-                            className="py-6 px-12 text-base bg-teal-600 hover:bg-teal-600 md:text-xl"
+                            className="py-6 px-12 text-base bg-teal-600 hover:bg-teal-600 w-full text-center"
                             disabled={isLoading}
                         >
                             {isLoading ? (
@@ -175,6 +179,25 @@ const Login = () => {
                             )}
                         </Button>
                     </form>
+                    <div
+                        className="lg:w-[80%] flex items-center text-center justify-center flex-row gap-2 bg-teal-600 px-4 py-3 rounded-md sm:mt-4 cursor-pointer hover:bg-teal-700"
+                        onClick={handleGoogleLogin}
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="1em"
+                            viewBox="0 0 512 512"
+                        >
+                            <path
+                                d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"
+                                fill="#FFFFFF"
+                            />
+                        </svg>
+                        <span className="lg:text-md text-sm text-white font-semibold">
+                            Continue with Google
+                        </span>
+                    </div>
+
                     <div className="lg:w-[80%] flex space-x-1 mt-4 text-base md:text-lg">
                         <p>Don't have an account yet?</p>
                         <Link to={"/register"} className="underline">

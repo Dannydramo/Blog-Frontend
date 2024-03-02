@@ -83,7 +83,7 @@ const ForgotPassword = () => {
                             onSubmit={handleSubmit(onSubmit)}
                             className="lg:w-[80%]"
                         >
-                            <div className="grid w-full my-6 max-w-sm items-center gap-1.5">
+                            <div className="grid w-full my-6 items-center gap-1.5">
                                 <Label htmlFor="email" className="text-base">
                                     Email
                                 </Label>
@@ -105,7 +105,7 @@ const ForgotPassword = () => {
                             </div>
                             <Button
                                 type="submit"
-                                className="py-7 px-16 text-base bg-teal-600 hover:bg-teal-600 md:text-xl"
+                                className="py-6 px-12 text-base bg-teal-600 hover:bg-teal-600 w-full text-center"
                                 disabled={isLoading}
                             >
                                 {isLoading ? (

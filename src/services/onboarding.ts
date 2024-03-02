@@ -20,7 +20,6 @@ export const registerUser = async (payload: RegisterProps) => {
         });
         status = 200;
         message = response.message;
-        Cookies.set("token", response.token, { expires: 7 });
     } catch (err: any) {
         status = err.response.status;
         message = err.response.data.message;
@@ -39,7 +38,6 @@ export const signInUser = async (payload: LoginProps) => {
         message = response.message;
 
         data = response.data.user;
-        Cookies.set("token", response.token, { expires: 7 });
     } catch (err: any) {
         status = err.response.status;
         message = err.response.data.message;

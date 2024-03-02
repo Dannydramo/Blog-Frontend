@@ -21,6 +21,10 @@ const Navbar = ({ children }: { children: JSX.Element }) => {
     const { setUser, user } = UserStore();
 
     useEffect(() => {
+        // const jwtCookie = document.cookie;
+        // const jwtToken = jwtCookie.substring(4);
+        // Cookies.set("token", jwtToken, { expires: 7 });
+
         const fetchUserDetails = async () => {
             try {
                 const { status, data } = await getUserDetails();

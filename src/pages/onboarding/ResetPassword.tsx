@@ -85,7 +85,7 @@ const ResetPassword = () => {
                         onSubmit={handleSubmit(onSubmit)}
                         className="lg:w-[80%]"
                     >
-                        <div className="grid w-full max-w-sm items-center my-6 gap-1.5">
+                        <div className="grid w-full items-center my-6 gap-1.5">
                             <Label htmlFor="password" className="text-base">
                                 Password
                             </Label>
@@ -126,7 +126,7 @@ const ResetPassword = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="grid w-full max-w-sm items-center gap-1.5 my-6">
+                        <div className="grid w-full items-center gap-1.5 my-6">
                             <Label htmlFor="password" className="text-base">
                                 Confirm Password
                             </Label>
@@ -176,7 +176,7 @@ const ResetPassword = () => {
 
                         <Button
                             type="submit"
-                            className="py-6 px-12 text-base bg-teal-600 hover:bg-teal-600 md:text-xl"
+                            className="py-6 px-12 text-base bg-teal-600 hover:bg-teal-600 w-full text-center"
                             disabled={isLoading}
                         >
                             {isLoading ? (

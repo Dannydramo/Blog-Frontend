@@ -35,8 +35,6 @@ export const uploadBlog = async (formData: BlogContent) => {
             }
         );
 
-        console.log(response);
-
         status = 200;
         message = response.data.message;
     } catch (err: any) {
