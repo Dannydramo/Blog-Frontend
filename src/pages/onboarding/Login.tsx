@@ -58,6 +58,7 @@ const Login = () => {
         }
     };
     const handleGoogleLogin = () => {
+        // Open Google authentication URL in a new window
         const googleAuthWindow = window.open(
             `${import.meta.env.VITE_APP_API_URL}/oauth/google`,
             "_blank"
@@ -67,15 +68,22 @@ const Login = () => {
         window.addEventListener("message", (event) => {
             // Check if the message is from the opened window
             if (event.source === googleAuthWindow) {
-                // Assuming the token is sent as part of the message data
-                const { status, token } = event.data;
-                if (status === "success" && token) {
-                    // Token received, handle it as needed
+                // Assuming the message data includes status, token, and redirectUrl
+                const { status, token, redirectUrl } = event.data;
+                if (status === "success") {
+                    // Handle successful authentication
                     console.log("Received token:", token);
+                    // Optionally, store the token in localStorage or a cookie
+                    // Redirect to the specified URL
+                    if (redirectUrl) {
+                        window.location.href = redirectUrl;
+                    }
                 } else {
                     // Handle unsuccessful authentication
                     console.error("Authentication failed");
                 }
+                // Close the authentication window after receiving the message
+                googleAuthWindow?.close();
             }
         });
     };
