@@ -22,6 +22,7 @@ const Navbar = ({ children }: { children: JSX.Element }) => {
     useEffect(() => {
         const jwtCookie = document.cookie;
         const jwtToken = jwtCookie.substring(6);
+        console.log(jwtToken);
         Cookies.set("token", jwtToken, { expires: 7 });
         const token = Cookies.get("token");
         if (token) {
