@@ -58,10 +58,26 @@ const Login = () => {
         }
     };
     const handleGoogleLogin = () => {
-        window.open(
+        const googleAuthWindow = window.open(
             `${import.meta.env.VITE_APP_API_URL}/oauth/google`,
-            "_self"
+            "_blank"
         );
+
+        // Listen for messages from the opened window
+        window.addEventListener("message", (event) => {
+            // Check if the message is from the opened window
+            if (event.source === googleAuthWindow) {
+                // Assuming the token is sent as part of the message data
+                const { status, token } = event.data;
+                if (status === "success" && token) {
+                    // Token received, handle it as needed
+                    console.log("Received token:", token);
+                } else {
+                    // Handle unsuccessful authentication
+                    console.error("Authentication failed");
+                }
+            }
+        });
     };
 
     return (
