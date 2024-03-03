@@ -19,6 +19,7 @@ const Navbar = ({ children }: { children: JSX.Element }) => {
     const authenticated = !!token;
     const navigate = useNavigate();
     const { setUser, user } = UserStore();
+    console.log(token);
 
     useEffect(() => {
         // const jwtCookie = document.cookie;
