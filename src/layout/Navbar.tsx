@@ -22,10 +22,10 @@ const Navbar = ({ children }: { children: JSX.Element }) => {
     // console.log(token);
 
     useEffect(() => {
-        const jwtCookie = document.cookie;
-        const jwtToken = jwtCookie.substring(4);
-        Cookies.set("token", jwtToken, { expires: 7 });
-        console.log(jwtToken);
+        // const jwtCookie = document.cookie;
+        // const jwtToken = jwtCookie.substring(4);
+        // Cookies.set("token", jwtToken, { expires: 7 });
+        // console.log(jwtToken);
 
         const fetchUserDetails = async () => {
             try {
