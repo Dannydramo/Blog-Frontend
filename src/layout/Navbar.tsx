@@ -16,12 +16,14 @@ import { UserStore } from "@/store/userStore";
 
 const Navbar = ({ children }: { children: JSX.Element }) => {
     const [authenticated, setAuthenticated] = useState(false);
-    // const authenticated = !!token;
     const navigate = useNavigate();
     const { setUser, user } = UserStore();
-    // console.log(token);
 
     useEffect(() => {
+        const jwtCookie = document.cookie;
+        const jwtToken = jwtCookie.substring(4);
+        // Cookies.set("token", jwtToken, { expires: 7 });
+        console.log(jwtToken, jwtCookie);
         const token = Cookies.get("token");
         if (token) {
             setAuthenticated(true);
