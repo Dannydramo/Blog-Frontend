@@ -15,17 +15,18 @@ import { getUserDetails } from "@/services/onboarding";
 import { UserStore } from "@/store/userStore";
 
 const Navbar = ({ children }: { children: JSX.Element }) => {
+    const token = Cookies.get("token");
+    const authenticated = !!token;
     const navigate = useNavigate();
     const { setUser, user } = UserStore();
-    let authenticated;
+    console.log(token);
+
     useEffect(() => {
         const jwtCookie = document.cookie;
         const jwtToken = jwtCookie.substring(4);
         Cookies.set("token", jwtToken, { expires: 7 });
-        const token = Cookies.get("token");
-        console.log(token, jwtToken);
+        console.log(jwtToken);
 
-        authenticated = !!token;
         const fetchUserDetails = async () => {
             try {
                 const { status, data } = await getUserDetails();
