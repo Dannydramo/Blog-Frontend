@@ -68,7 +68,10 @@ const Register = () => {
     };
 
     const handleGoogleLogin = () => {
-        window.open(`${process.env.VITE_APP_API_URL}/oauth/google`, "_self");
+        window.open(
+            `${import.meta.env.VITE_APP_API_URL}/oauth/google`,
+            "_self"
+        );
     };
 
     return (
@@ -244,7 +247,7 @@ const Register = () => {
                         </Button>
                     </form>
                     <div
-                        className="lg:w-[80%] flex items-center text-center justify-center flex-row gap-2 bg-teal-600 px-4 py-3 rounded-md sm:mt-4 cursor-pointer hover:bg-teal-700"
+                        className="lg:w-[80%] flex items-center text-center justify-center flex-row gap-2 bg-teal-600 px-4 py-3 rounded-md mt-4 cursor-pointer hover:bg-teal-700"
                         onClick={handleGoogleLogin}
                     >
                         <svg
