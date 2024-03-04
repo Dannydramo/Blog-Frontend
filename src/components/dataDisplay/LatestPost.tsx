@@ -18,7 +18,7 @@ const LatestPost = ({
             </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 lg:gap-8">
                 {!skeletonState.blog_data_retrieved
-                    ? [2, 3, 4, 5, 6, 7, 8, 9].map((data) => (
+                    ? [2, 3, 4, 5, 6, 7, 8, 9, 10].map((data) => (
                           <article
                               key={data}
                               className="overflow-hidden rounded-lg shadow transition hover:shadow-lg"
