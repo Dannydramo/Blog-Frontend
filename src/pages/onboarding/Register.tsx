@@ -67,13 +67,6 @@ const Register = () => {
         }
     };
 
-    const handleGoogleLogin = () => {
-        window.open(
-            `${import.meta.env.VITE_APP_API_URL}/oauth/google`,
-            "_self"
-        );
-    };
-
     return (
         <div className="w-[90%] lg:w-[90%] sm:w-[70%] md:w-[60%] max-w-[1600px] mx-auto">
             <div className="py-4 lg:py-8 lg:space-x-6 lg:flex  lg:min-h-screen lg:justify-between">
@@ -246,24 +239,6 @@ const Register = () => {
                             )}
                         </Button>
                     </form>
-                    <div
-                        className="lg:w-[80%] flex items-center text-center justify-center flex-row gap-2 bg-teal-600 px-4 py-3 rounded-md mt-4 cursor-pointer hover:bg-teal-700"
-                        onClick={handleGoogleLogin}
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            height="1em"
-                            viewBox="0 0 512 512"
-                        >
-                            <path
-                                d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"
-                                fill="#FFFFFF"
-                            />
-                        </svg>
-                        <span className="lg:text-md text-sm text-white font-semibold">
-                            Continue with Google
-                        </span>
-                    </div>
                     <div className="lg:w-[80%] flex space-x-1 mt-4 text-base md:text-lg">
                         <p>Already have an account?</p>
                         <Link to={"/login"} className="underline">

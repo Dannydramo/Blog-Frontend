@@ -10,26 +10,17 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getUserDetails } from "@/services/onboarding";
 import { UserStore } from "@/store/userStore";
 
 const Navbar = ({ children }: { children: JSX.Element }) => {
-    const [authenticated, setAuthenticated] = useState(false);
+    const token = Cookies.get("token");
+    const authenticated = !!token;
     const navigate = useNavigate();
     const { setUser, user } = UserStore();
 
     useEffect(() => {
-        const jwtCookie = document.cookie;
-        const jwtToken = jwtCookie.substring(6);
-        console.log(jwtToken);
-
-        Cookies.set("token", jwtToken, { expires: 7 });
-        const token = Cookies.get("token");
-
-        if (token) {
-            setAuthenticated(true);
-        }
         const fetchUserDetails = async () => {
             try {
                 const { status, data } = await getUserDetails();
@@ -41,9 +32,7 @@ const Navbar = ({ children }: { children: JSX.Element }) => {
                 console.log("Unable to fetch user details", error);
             }
         };
-        if (authenticated) {
-            fetchUserDetails();
-        }
+        fetchUserDetails();
     }, []);
 
     const hanldeLogOut = () => {
