@@ -51,3 +51,21 @@ export const fetchRelatedBlogsByAuthor = async (authorId: string) => {
     }
     return { status, message, data };
 };
+
+export const generateBlogContent = async (title: string) => {
+    try {
+        const response = await Axios({
+            url: `/blog/generate`,
+            method: "post",
+            body: { title },
+        });
+
+        status = 200;
+        message = response.message;
+        data = response.data.text;
+    } catch (err: any) {
+        status = err.response.status;
+        message = err.response.data.message;
+    }
+    return { status, message, data };
+};

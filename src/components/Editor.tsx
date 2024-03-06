@@ -34,6 +34,7 @@ import { cloudinaryConfig } from "@/utils/cloudinary";
 import axios from "axios";
 import Resizer from "react-image-file-resizer";
 import { categories } from "@/utils/category";
+import { generateBlogContent } from "@/services/blogs";
 
 const Editor = () => {
     const [blogContent, setBlogContent] = useState<BlogContent>({
@@ -107,6 +108,39 @@ const Editor = () => {
             }));
         } catch (error) {
             console.error("Error uploading image:", error);
+        }
+    };
+
+    const generateContent = async () => {
+        if (blogContent.title.trim() === "") {
+            toast.error(
+                "Please provide the title of the blog you want to generate it's content "
+            );
+            return;
+        }
+        try {
+            setIsLoading(true);
+
+            const { status, message, data } = await generateBlogContent(
+                blogContent.title
+            );
+            if (status !== 200) {
+                toast.error(message);
+                setIsLoading(false);
+                return;
+            }
+            toast.success(message);
+            setIsLoading(false);
+            setBlogContent((prev) => ({
+                ...prev,
+                content: data,
+            }));
+        } catch (error) {
+            toast.error(
+                "Unable to generate blog content. Please try again later"
+            );
+            setIsLoading(false);
+            return;
         }
     };
 
@@ -334,14 +368,25 @@ const Editor = () => {
                             }
                         />
                     </div>
+
                     <button
                         type="submit"
-                        className="bg-teal-600 hover:bg-teal-600 text-white font-bold py-3 px-16 text-base md:text-xl rounded mt-[4.5rem] sm:mt-12"
+                        className="bg-teal-600 hover:bg-teal-600 text-white font-bold py-2 px-16 text-base md:text-xl rounded mt-[4.5rem] sm:mt-12"
                         disabled={isLoading}
                     >
                         {isLoading ? "Publishing" : "Publish"}
                     </button>
                 </form>
+                <div className="grid my-4 items-center gap-1.5">
+                    <button
+                        type="button"
+                        className="text-white bg-teal-600 hover:bg-teal-600 w-fit sm:fixed sm:bottom-4 sm:right-6 font-bold py-2 px-4 rounded"
+                        onClick={generateContent}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? "Generating Content" : "Generate Content"}
+                    </button>
+                </div>
             </div>
         </>
     );
