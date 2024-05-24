@@ -1,16 +1,16 @@
-import { Axios } from "../helpers/axiosHelper";
-import Cookies from "js-cookie";
+import { Axios } from '../helpers/axiosHelper';
+import Cookies from 'js-cookie';
 
 let status: number;
 let message: string;
 let data: any;
 
 export const archiveBlog = async (blogId: string) => {
-    const token = Cookies.get("token");
+    const token = Cookies.get('token');
     try {
         const response = await Axios({
             url: `/archive/${blogId}`,
-            method: "patch",
+            method: 'patch',
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -27,11 +27,11 @@ export const archiveBlog = async (blogId: string) => {
 };
 
 export const unarchiveBlog = async (blogId: string) => {
-    const token = Cookies.get("token");
+    const token = Cookies.get('token');
     try {
         const response = await Axios({
             url: `/archive/unarchive/${blogId}`,
-            method: "patch",
+            method: 'patch',
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -48,11 +48,11 @@ export const unarchiveBlog = async (blogId: string) => {
 };
 
 export const getArchiveBlogs = async () => {
-    const token = Cookies.get("token");
+    const token = Cookies.get('token');
     try {
         const response = await Axios({
             url: `/archive/`,
-            method: "get",
+            method: 'get',
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -70,11 +70,11 @@ export const getArchiveBlogs = async () => {
 };
 
 export const fetchBlogArchiveStatus = async (blogId: string) => {
-    const token = Cookies.get("token");
+    const token = Cookies.get('token');
     try {
         const response = await Axios({
             url: `/archive/status/${blogId}`,
-            method: "get",
+            method: 'get',
             headers: {
                 Authorization: `Bearer ${token}`,
             },

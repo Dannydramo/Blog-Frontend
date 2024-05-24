@@ -1,7 +1,7 @@
-import { BlogContent } from "@/interfaces/blog";
-import { Axios } from "../helpers/axiosHelper";
-import Cookies from "js-cookie";
-import axios from "axios";
+import { BlogContent } from '@/interfaces/blog';
+import { Axios } from '../helpers/axiosHelper';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 let status: number;
 let message: string;
@@ -11,7 +11,7 @@ export const getAuthorDetails = async (authorId: string) => {
     try {
         const response = await Axios({
             url: `/blog/author-details/${authorId}`,
-            method: "get",
+            method: 'get',
         });
         status = 200;
         data = response.data;
@@ -23,10 +23,10 @@ export const getAuthorDetails = async (authorId: string) => {
 };
 
 export const uploadBlog = async (formData: BlogContent) => {
-    const token = Cookies.get("token");
+    const token = Cookies.get('token');
     try {
         const response = await axios.post(
-            "https://pink-stormy-binturong.cyclic.app/api/v1/blog/post",
+            'https://scribbles-backend.onrender.com/api/v1/blog/post',
             formData,
             {
                 headers: {
@@ -45,11 +45,11 @@ export const uploadBlog = async (formData: BlogContent) => {
 };
 
 export const updateBlog = async (formData: BlogContent, blogId: string) => {
-    const token = Cookies.get("token");
+    const token = Cookies.get('token');
 
     try {
         const response = await axios.patch(
-            `https://pink-stormy-binturong.cyclic.app/api/v1/blog/edit/${blogId}`,
+            `https://scribbles-backend.onrender.com/api/v1/blog/edit/${blogId}`,
             formData,
             {
                 headers: {
@@ -68,11 +68,11 @@ export const updateBlog = async (formData: BlogContent, blogId: string) => {
 };
 
 export const getAllBlogsByUser = async (userId: string) => {
-    const token = Cookies.get("token");
+    const token = Cookies.get('token');
     try {
         const response = await Axios({
             url: `/blog/my-blogs/${userId}`,
-            method: "get",
+            method: 'get',
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -88,11 +88,11 @@ export const getAllBlogsByUser = async (userId: string) => {
 };
 
 export const updateUser = async (data: any) => {
-    const token = Cookies.get("token");
+    const token = Cookies.get('token');
     try {
         const response = await Axios({
             url: `/auth/update-me`,
-            method: "patch",
+            method: 'patch',
             headers: {
                 Authorization: `Bearer ${token}`,
             },

@@ -1,4 +1,4 @@
-import { Label } from "@radix-ui/react-label";
+import { Label } from '@radix-ui/react-label';
 import {
     ChangeEvent,
     FormEvent,
@@ -6,50 +6,50 @@ import {
     useMemo,
     useRef,
     useState,
-} from "react";
-import QuillEditor from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import { Input } from "./ui/input";
-import { Check, ChevronsUpDown } from "lucide-react";
+} from 'react';
+import QuillEditor from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { Input } from './ui/input';
+import { Check, ChevronsUpDown } from 'lucide-react';
 
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 import {
     Command,
     CommandEmpty,
     CommandGroup,
     CommandInput,
     CommandItem,
-} from "@/components/ui/command";
+} from '@/components/ui/command';
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from "@/components/ui/popover";
-import { uploadBlog } from "@/services/author";
-import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
-import { BlogContent } from "@/interfaces/blog";
-import { cloudinaryConfig } from "@/utils/cloudinary";
-import axios from "axios";
-import Resizer from "react-image-file-resizer";
-import { categories } from "@/utils/category";
-import { generateBlogContent } from "@/services/blogs";
+} from '@/components/ui/popover';
+import { uploadBlog } from '@/services/author';
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
+import { BlogContent } from '@/interfaces/blog';
+import { cloudinaryConfig } from '@/utils/cloudinary';
+import axios from 'axios';
+import Resizer from 'react-image-file-resizer';
+import { categories } from '@/utils/category';
+import { generateBlogContent } from '@/services/blogs';
 
 const Editor = () => {
     const [blogContent, setBlogContent] = useState<BlogContent>({
-        summary: "",
-        title: "",
-        content: "",
-        coverImage: "",
-        category: "",
+        summary: '',
+        title: '',
+        content: '',
+        coverImage: '',
+        category: '',
     });
     const [coverImageFile, setCoverImageFile] = useState<any>();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const quill = useRef<any>();
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState('');
 
     const resizeFile = (file: any) =>
         new Promise((resolve) => {
@@ -57,13 +57,13 @@ const Editor = () => {
                 file,
                 2000,
                 1333,
-                "JPEG",
+                'JPEG',
                 100,
                 0,
                 (uri) => {
                     resolve(uri);
                 },
-                "base64"
+                'base64'
             );
         });
 
@@ -87,16 +87,16 @@ const Editor = () => {
     const handleCoverImageUpload = async () => {
         try {
             const formData = new FormData();
-            formData.append("file", coverImageFile);
-            formData.append("upload_preset", cloudinaryConfig.uploadPreset);
+            formData.append('file', coverImageFile);
+            formData.append('upload_preset', cloudinaryConfig.uploadPreset);
 
             const response = await axios.post(
                 `https://api.cloudinary.com/v1_1/${cloudinaryConfig.cloudName}/image/upload`,
                 formData,
                 {
                     headers: {
-                        "Content-Type": "multipart/form-data",
-                        "X-Requested-With": "XMLHttpRequest",
+                        'Content-Type': 'multipart/form-data',
+                        'X-Requested-With': 'XMLHttpRequest',
                     },
                 }
             );
@@ -107,12 +107,12 @@ const Editor = () => {
                 coverImage: secureUrl,
             }));
         } catch (error) {
-            console.error("Error uploading image:", error);
+            console.error('Error uploading image:', error);
         }
     };
 
     const generateContent = async () => {
-        if (blogContent.title.trim() === "") {
+        if (blogContent.title.trim() === '') {
             toast.error(
                 "Please provide the title of the blog you want to generate it's content "
             );
@@ -137,7 +137,7 @@ const Editor = () => {
             }));
         } catch (error) {
             toast.error(
-                "Unable to generate blog content. Please try again later"
+                'Unable to generate blog content. Please try again later'
             );
             setIsLoading(false);
             return;
@@ -166,11 +166,11 @@ const Editor = () => {
             }
             toast.success(message);
             setIsLoading(false);
-            navigate("/");
+            navigate('/');
         } catch (err) {
             console.log(err);
             toast.error(
-                "Unable to process blog creation. Kindly check your intenet connection and try again!"
+                'Unable to process blog creation. Kindly check your intenet connection and try again!'
             );
             setIsLoading(false);
             return;
@@ -178,9 +178,9 @@ const Editor = () => {
     };
 
     const imageHandler = useCallback(() => {
-        const input = document.createElement("input");
-        input.setAttribute("type", "file");
-        input.setAttribute("accept", "image/*");
+        const input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
         input.click();
 
         input.onchange = () => {
@@ -196,9 +196,9 @@ const Editor = () => {
                     if (range && imageUrl) {
                         quillEditor?.insertEmbed(
                             range.index,
-                            "image",
+                            'image',
                             imageUrl,
-                            "user"
+                            'user'
                         );
                     }
                 };
@@ -213,16 +213,16 @@ const Editor = () => {
             toolbar: {
                 container: [
                     [{ header: [2, 3, 4, false] }],
-                    ["bold", "italic", "underline", "blockquote"],
+                    ['bold', 'italic', 'underline', 'blockquote'],
                     [{ color: [] }],
                     [
-                        { list: "ordered" },
-                        { list: "bullet" },
-                        { indent: "-1" },
-                        { indent: "+1" },
+                        { list: 'ordered' },
+                        { list: 'bullet' },
+                        { indent: '-1' },
+                        { indent: '+1' },
                     ],
-                    ["link", "image"],
-                    ["clean"],
+                    ['link', 'image'],
+                    ['clean'],
                 ],
                 handlers: {
                     image: imageHandler,
@@ -236,19 +236,19 @@ const Editor = () => {
     );
 
     const formats = [
-        "header",
-        "bold",
-        "italic",
-        "underline",
-        "strike",
-        "blockquote",
-        "list",
-        "bullet",
-        "indent",
-        "link",
-        "image",
-        "color",
-        "clean",
+        'header',
+        'bold',
+        'italic',
+        'underline',
+        'strike',
+        'blockquote',
+        'list',
+        'bullet',
+        'indent',
+        'link',
+        'image',
+        'color',
+        'clean',
     ];
 
     return (
@@ -263,7 +263,7 @@ const Editor = () => {
                             type="text"
                             name="title"
                             className="outline-none"
-                            onChange={(e) => handleInputChange(e, "title")}
+                            onChange={(e) => handleInputChange(e, 'title')}
                         />
                     </div>
                     <div className="grid w-full my-4 items-center gap-1.5">
@@ -274,7 +274,7 @@ const Editor = () => {
                             type="text"
                             name="summary"
                             className="outline-none"
-                            onChange={(e) => handleInputChange(e, "summary")}
+                            onChange={(e) => handleInputChange(e, 'summary')}
                         />
                     </div>
                     <div className="grid w-full my-4 items-center gap-1.5">
@@ -305,7 +305,7 @@ const Editor = () => {
                                               (category) =>
                                                   category.value === value
                                           )?.label
-                                        : "Select category..."}
+                                        : 'Select category...'}
                                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                 </Button>
                             </PopoverTrigger>
@@ -323,7 +323,7 @@ const Editor = () => {
                                                 onSelect={(currentValue) => {
                                                     setValue(
                                                         currentValue === value
-                                                            ? ""
+                                                            ? ''
                                                             : currentValue
                                                     );
                                                     setBlogContent((prev) => ({
@@ -335,10 +335,10 @@ const Editor = () => {
                                             >
                                                 <Check
                                                     className={cn(
-                                                        "mr-2 h-4 w-4",
+                                                        'mr-2 h-4 w-4',
                                                         value === category.value
-                                                            ? "opacity-100"
-                                                            : "opacity-0"
+                                                            ? 'opacity-100'
+                                                            : 'opacity-0'
                                                     )}
                                                 />
                                                 {category.label}
@@ -374,7 +374,7 @@ const Editor = () => {
                         className="bg-teal-600 hover:bg-teal-600 text-white font-bold py-2 px-16 text-base md:text-xl rounded mt-[4.5rem] sm:mt-12"
                         disabled={isLoading}
                     >
-                        {isLoading ? "Publishing" : "Publish"}
+                        {isLoading ? 'Publishing' : 'Publish'}
                     </button>
                 </form>
                 <div className="grid my-4 items-center gap-1.5">
@@ -384,7 +384,30 @@ const Editor = () => {
                         onClick={generateContent}
                         disabled={isLoading}
                     >
-                        {isLoading ? "Generating Content" : "Generate Content"}
+                        {isLoading ? (
+                            <svg
+                                className="w-5 h-5 text-white animate-spin"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                            >
+                                <circle
+                                    className="opacity-25"
+                                    cx="12"
+                                    cy="12"
+                                    r="10"
+                                    stroke="currentColor"
+                                    strokeWidth="4"
+                                ></circle>
+                                <path
+                                    className="opacity-75"
+                                    fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                ></path>
+                            </svg>
+                        ) : (
+                            'Generate Content'
+                        )}
                     </button>
                 </div>
             </div>
